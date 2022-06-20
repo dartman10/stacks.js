@@ -25,7 +25,7 @@ import {
   standardPrincipalCV,
 } from '@stacks/transactions';
 
-interface IPunksState { // is context same as state? is this an interface for context or state?
+interface IPunksState { 
   id: number,
   text: string,
 }
@@ -33,24 +33,20 @@ interface IPunksState { // is context same as state? is this an interface for co
 export type actionType = 'LIST' | 'BUY' | 'WHITELIST' | 'DEPLOY';
 
 // action interface
-// dispatch({type:'delete',payload:todo})}>
 interface IAction {
   type: actionType;
   payload: number;
 }
 
-// set initial state. state variables basically.
+// Initial state
 const punksInitialState: IPunksState  = { id: 1, text: 'something' };
 
-// create and export a 'context'
-//export const PunksContext = React.createContext<IPunksState>(punksInitialState);
-
-// main function
+// +--------+
+// | main() |
+// +--------+
 function App() {
   const [ state, dispatch ] = useReducer(punksReducer, punksInitialState);
   return (
-//    <PunksContext.Provider value={{...state, ...dispatch}}>
-//      </PunksContext.Provider>
     <>
       <p>state.id = {state.id}</p>
       <p>state.text = {state.text}</p>
