@@ -56,6 +56,15 @@ function App() {
     <>
       <p>state.id = {state.id}</p>
       <p>state.text = {state.text}</p>
+      <hr></hr>
+      <p>CAST OF CHARACTERS</p>
+      <p>1. NFT Contract Deployer</p>
+      <p>2. NFT Owner</p>
+      <p>3. Marketplace Contract Deployer</p>
+      <p>4. Whitelist Maintainer</p>
+      <p>5. NFT Lister (also the NFT owner above)</p>
+      <p>6. NFT Buyer</p>
+      <hr></hr>
       <table>
         <thead>
           <tr>
