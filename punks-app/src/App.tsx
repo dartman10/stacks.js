@@ -93,7 +93,10 @@ function App() {
   );
 }
 
-// reducer function. 'state' are the parameter values, while 'action' is the action to take and do with the state values.
+
+// +-----------------+
+// | Reducer - begin | 
+// +-----------------+
 function punksReducer (state: IPunksState, action: IAction): IPunksState {
   switch (action.type) {
     case 'WHITELIST':
@@ -105,13 +108,26 @@ function punksReducer (state: IPunksState, action: IAction): IPunksState {
       return punksInitialState;
   }
 }
+// +---------------+
+// | Reducer - end | 
+// +---------------+
 
+
+// +-------------+
+// | Buy - begin |
+// +-------------+
 function buyNft () : IPunksState {
   return {id: 2, text: 'Buy NFT'};
   //return punksInitialState;
 }
+// +-----------+
+// | Buy - end |
+// +-----------+
 
 
+// +-------------------+
+// | Whitelist - begin |
+// +-------------------+
 async function marketplace_00_add_wl() : Promise<IPunksState> {
   const network = new StacksMocknet();
   const txSenderKey = '7287ba251d44a4d3fd9276c88ce34c5c52a038955511cccaf77e61068649c17801'; // marketplace owner
@@ -154,5 +170,9 @@ async function marketplace_00_add_wl() : Promise<IPunksState> {
   console.log('transaction_id:' + txId);
   return {id: 100, text: txId};
 }
+// +-----------------+
+// | Whitelist - end |
+// +-----------------+
+
 
 export default App;
