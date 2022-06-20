@@ -1,0 +1,17 @@
+// Component using PunksContext
+
+import React, { useContext } from 'react';
+import { PunksContext } from './App';  // import the created context from App.tsx
+
+function PunksHello () {
+  // receive state and dispatch from index.js
+  const { state, dispatch } = useContext(PunksContext);
+
+  return {
+    <div>
+    hello
+        </div>
+  }
+}
+
+export default PunksHello;

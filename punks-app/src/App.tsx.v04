@@ -1,0 +1,91 @@
+// Using useContext and useReducer:
+//  1. Set initial state values.
+//  2. Create a context, with React.createContext()
+//      - to make `state` and `dispatch` available for child components
+//  3. Create reducer function.
+//  4. Create context provider flow.
+//  5. Create components.
+
+import { type } from '@testing-library/user-event/dist/type';
+import React, { Reducer, useReducer } from 'react';
+import './App.css';
+//import { abiFunctionToString } from '@stacks/transactions';
+//import Read_Only from './contract_call_read_only';
+
+interface IPunksState { // is context same as state? is this an interface for context or state?
+  id: number,
+  text: string,
+}
+
+export type actionType = 'LIST' | 'BUY' | 'WHITELIST';
+
+// action interface
+// dispatch({type:'delete',payload:todo})}>
+interface IAction {
+  type: actionType;
+  payload: number;
+}
+
+// set initial state. state variables basically.
+const punksInitialState: IPunksState  = { id: 1, text: 'something' };
+
+// create and export a 'context'
+//export const PunksContext = React.createContext<IPunksState>(punksInitialState);
+
+// main function
+function App() {
+  const [ state, dispatch ] = useReducer(punksReducer, punksInitialState);
+  return (
+//    <PunksContext.Provider value={{...state, ...dispatch}}>
+//      </PunksContext.Provider>
+    <>
+      <p>state.id = {state.id}</p>
+      <p>state.text = {state.text}</p>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Action</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td>
+          <button type="button"
+              onClick = { () =>
+                dispatch({type:'LIST', payload: 2})
+              }
+            > LIST
+            </button>
+          </td>
+          <td>
+            <button type="button"
+              onClick = { () =>
+                dispatch({type:'BUY', payload: 2})
+              }
+            > BUY
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </>
+  );
+}
+
+// reducer function. 'state' are the parameter values, while 'action' is the action to take and do with the state values.
+function punksReducer (state: IPunksState, action: IAction): IPunksState {
+  switch (action.type) {
+    case 'BUY':
+      return buyNft();
+    default:
+      return punksInitialState;
+  }
+}
+
+function buyNft () : IPunksState {
+  return {id: 2, text: 'Buy NFT'};
+  //return punksInitialState;
+}
+
+export default App;
