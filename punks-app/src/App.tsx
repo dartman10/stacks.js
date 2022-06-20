@@ -1,4 +1,8 @@
-// Punkers Testing
+/* 
++-----------------+
+| Punkers Testing |
++-----------------+
+*/
 
 // Mapping of address to private keys for testing:
 //   ST1VXGZWHHXJ501Q1EHCGWE9K8WWHWQN1NM62PCW0  e71682a2cc6e32ba4875011175c7e7aa8d64e0c699a40e08d2baa758214057b801  --> lister/owner of nft
@@ -59,12 +63,6 @@ function App() {
       <p>5. NFT Lister (also the NFT owner above)</p>
       <p>6. NFT Buyer</p>
       <hr></hr>
-      Mapping of address to keys:
-      <p>ST1VXGZWHHXJ501Q1EHCGWE9K8WWHWQN1NM62PCW0  e71682a2cc6e32ba4875011175c7e7aa8d64e0c699a40e08d2baa758214057b801</p>
-      <p>ST2TQ281FV5Y2TTEWJQS5ZJXFKQVCEDEGZETC4Y10  c07637ffad47d9255adf59b8d14f0d07081f1ebec501abc3c6951bc70eb2a84d01</p>
-      <p>ST3VSVNG0FR8JDDD3WENJVX10P1VWTR7PP3EM0HA1  0492f0ee23d216679d537072159afb17fe33706f3de72c949ceb3b7257c00d0b01</p>
-
-      <hr></hr>
       <table>
         <thead>
           <tr>
@@ -79,66 +77,80 @@ function App() {
             <td>
               <button type="button"
                onClick = { () =>
-                  dispatch({type:'DEPLOYNFT', payload: 2})
+                  dispatch({type:'DEPLOYNFT', payload: 1})
                 }
                 > DEPLOY NFT
               </button>
             </td>
-            <td>txSenderKey = '7287ba251d44a4d3fd9276c88ce34c5c52a038955511cccaf77e61068649c17801'
+            <td>tbd
             </td>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>
-              <button type="button"
-               onClick = { () =>
-                  dispatch({type:'DEPLOYMARKET', payload: 2})
-                }
-                > DEPLOY MARKETPLACE
-              </button>
-            </td>
-            <td>txSenderKey = '7287ba251d44a4d3fd9276c88ce34c5c52a038955511cccaf77e61068649c17801'
-            </td>
-          </tr>
-
-          <tr>
-            <td>1</td>
-            <td>
-              <button type="button"
-               onClick = { () =>
-                  dispatch({type:'WHITELIST', payload: 2})
-                }
-                > WHITELIST
-              </button>
-            </td>
-            <td>txSenderKey = '7287ba251d44a4d3fd9276c88ce34c5c52a038955511cccaf77e61068649c17801'
-
-            </td>
-          </tr>
-
           <tr>
             <td>2</td>
             <td>
               <button type="button"
-                onClick = { () =>
-                  dispatch({type:'LIST', payload: 2})
+               onClick = { () =>
+                  dispatch({type:'MINT', payload: 2})
                 }
-                > LIST
+                > MINT NFT
               </button>
             </td>
-            <td>tell me</td>
+            <td>tbd
+            </td>
           </tr>
+
           <tr>
             <td>3</td>
             <td>
               <button type="button"
+               onClick = { () =>
+                  dispatch({type:'DEPLOYMARKET', payload: 3})
+                }
+                > DEPLOY MARKETPLACE
+              </button>
+            </td>
+            <td>tbd
+            </td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>
+              <button type="button"
+               onClick = { () =>
+                  dispatch({type:'WHITELIST', payload: 4})
+                }
+                > WHITELIST
+              </button>
+            </td>
+            <td>tbd
+
+            </td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>
+              <button type="button"
                 onClick = { () =>
-                  dispatch({type:'BUY', payload: 2})
+                  dispatch({type:'LIST', payload: 5})
+                }
+                > LIST
+              </button>
+            </td>
+            <td>tbd</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>
+              <button type="button"
+                onClick = { () =>
+                  dispatch({type:'BUY', payload: 6})
                 }
               > BUY
               </button>
             </td>
-            <td>tell me</td>
+            <td>tbd</td>
           </tr>
         </tbody>
       </table>
@@ -155,6 +167,9 @@ function punksReducer (state: IPunksState, action: IAction): IPunksState {
     case 'DEPLOYNFT':
       deployNft();
       return {id:10, text: 'DEPLOYNFT executed'};
+    case 'MINT':
+        mintNft();
+        return {id:10, text: 'MINT executed'};
     case 'DEPLOYMARKET':
         deployMarketplace();
         return {id:10, text: 'DEPLOYMARKET executed'};
@@ -367,6 +382,46 @@ async function buyNft () : Promise<IPunksState> {
 // +-----------+
 // | Buy - end |
 // +-----------+
+
+
+// +--------------------+
+// | Mint NFT - begin |
+// +--------------------+
+async function mintNft () : Promise<IPunksState> {
+  const network = new StacksMocknet();
+  const deployer = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+  const minterAddress = 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG';
+  const txSenderKey = '530d9f61984c888536871c6573073bdfc0058896dc1adfe9a6a10dfacadc209101';
+  const assetAddress = deployer;
+  const assetContractName = 'punker-nft'; // This is the contract name, not the NFT name.
+  const functionArgs: never[] = []; // claim() has no parameters
+  const postConditions = [
+    makeStandardSTXPostCondition(minterAddress, FungibleConditionCode.GreaterEqual, 0),
+  ];
+  const options = {
+    contractAddress: assetAddress,
+    contractName: assetContractName,
+    functionName: 'claim', // claim/mint an NFT
+    functionArgs,
+    network,
+    senderKey: txSenderKey,
+    postConditions,
+    appDetails: {
+      name: 'Dartman',
+      icon: 'https://static.vecteezy.com/system/resources/previews/000/649/115/original/user-icon-symbol-sign-vector.jpg',
+    },
+    anchorMode: AnchorMode.Any,
+    //nonce: 36n, // skip nonce check
+    fee: 500n, // skip fee estimator
+  };
+  const transaction = await makeContractCall(options);
+  const broadcastResponse = await broadcastTransaction(transaction, network);
+  console.log('\nbroadcastResponse=' + JSON.stringify(broadcastResponse));
+  return {id: 2, text: 'Mint NFT'};
+}
+// +----------------+
+// | Mint NFT - end |
+// +----------------+
 
 
 // +--------------------+
