@@ -30,7 +30,7 @@ interface IPunksState { // is context same as state? is this an interface for co
   text: string,
 }
 
-export type actionType = 'LIST' | 'BUY' | 'WHITELIST';
+export type actionType = 'LIST' | 'BUY' | 'WHITELIST' | 'DEPLOY';
 
 // action interface
 // dispatch({type:'delete',payload:todo})}>
